@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root { color-scheme: light; }
+  .dark { color-scheme: dark; }
+  html { scroll-behavior: smooth; }
+  body { @apply bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 antialiased; }
+  ::selection { @apply bg-brand text-white; }
+}
+
+@layer components {
+  .container-x { @apply mx-auto w-full max-w-content px-6; }
+  .card {
+    @apply rounded-xl border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900;
+  }
+  .link-brand {
+    @apply text-brand hover:underline dark:text-brand-dark underline-offset-4;
+  }
+  .btn {
+    @apply inline-flex items-center gap-2 rounded-lg border border-neutral-200 px-4 py-2 text-sm font-medium
+           transition hover:border-neutral-400 dark:border-neutral-800 dark:hover:border-neutral-600;
+  }
+  .btn-solid {
+    @apply inline-flex items-center gap-2 rounded-lg bg-brand px-4 py-2 text-sm font-medium text-white
+           transition hover:bg-brand-light dark:bg-brand-light dark:hover:bg-brand-dark dark:hover:text-neutral-950;
+  }
+  .eyebrow {
+    @apply font-mono text-xs uppercase tracking-widest text-brand dark:text-brand-dark;
+  }
+}
