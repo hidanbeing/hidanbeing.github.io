@@ -16,7 +16,7 @@ export const profile = {
 export const about = [
   {
     k: '현재',
-    v: '인스웨이브시스템즈 기술지원팀 (2025.04 ~ 재직 중)',
+    v: '인스웨이브 기술지원팀 (2025.04 ~ 재직 중)',
   },
   {
     k: 'Java Web 시스템 운영',
@@ -34,7 +34,7 @@ export const about = [
 
 export const experience = [
   {
-    company: '인스웨이브시스템즈',
+    company: '인스웨이브',
     team: '기술지원팀 · 프로',
     period: '2025.04 ~ Present',
     tasks: [
