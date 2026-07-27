@@ -1,14 +1,14 @@
 export const profile = {
   name: '이단비',
   nameEn: 'Danbee Lee',
-  title: 'Backend · AI · System Engineer',
+  title: 'AI · System Engineer',
   tagline: '반복되는 문제의 원인을 분석하고, 시스템으로 해결합니다.',
   summary:
     '웹 시스템을 운영하며 장애의 원인 구간을 좁혀 들어가고, 같은 문제가 다시 생기지 않도록 시스템 자체를 고쳐왔습니다. 운영 데이터가 어디에 어떤 형태로 쌓이는지 알기에, 반복 업무를 생성형 AI로 자동화할 수 있었습니다.',
   email: 'medanbee@gmail.com',
   github: 'https://github.com/hidanbeing',
   blog: '',
-  resume: '/resume/이단비_이력서.pdf',
+  resume: '', // PDF를 public/resume/ 에 넣고 경로를 적으면 버튼이 나타납니다
   location: '서울',
   siteUrl: 'https://hidanbeing.github.io',
 } as const;
@@ -67,3 +67,40 @@ export const education = {
   period: '2020.03 – 2026.02 (졸업)',
   gpa: '전체 3.97 / 4.5 · 전공 4.02 / 4.5',
 } as const;
+
+/**
+ * Hero 눈금선 — 실제 연도 스케일로 그린다.
+ * birth를 채우면 축이 출생부터 시작하고, 비워두면 가장 이른 트랙부터 시작한다.
+ * end가 빈 문자열이면 '현재'까지로 본다.
+ */
+export const hobbies = '클라이밍 · 모터스포츠(F1) · 캠핑 · 페스티벌 구경';
+
+/**
+ * 방문 집계 (GoatCounter).
+ * goatcounter.com에서 사이트를 만들면 https://<코드>.goatcounter.com 주소를 받는데,
+ * 그 <코드> 부분만 여기 넣으면 된다. 비워두면 스크립트가 아예 로드되지 않는다.
+ */
+export const analytics = {
+  goatcounter: '', // 예: 'danbee'
+};
+
+type LifeSegment = { name: string; start: string; end: string; tone: 'faint' | 'ink' | 'signal' };
+type LifeTrack = { label: string; segments: LifeSegment[] };
+
+export const lifeline: { birth: string; tracks: LifeTrack[] } = {
+  birth: '2001.09',
+  tracks: [
+    {
+      label: '학업',
+      segments: [
+        // 통상 학제 기준(2001.09생 → 2008.03 초등 입학). 대학 입학 2020.03과 일치.
+        { name: '초 · 중 · 고', start: '2008.03', end: '2020.02', tone: 'faint' },
+        { name: '세종대학교 소프트웨어학과', start: '2020.03', end: '2026.02', tone: 'ink' },
+      ],
+    },
+    {
+      label: '경력',
+      segments: [{ name: '인스웨이브 기술지원팀', start: '2025.04', end: '', tone: 'signal' }],
+    },
+  ],
+};

@@ -2,31 +2,124 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ------------------------------------------------------------------
+   토큰 — "계측기"
+   signal은 측정된 값·라이브 상태에만 쓴다. 장식으로 쓰지 않는다.
+------------------------------------------------------------------- */
 @layer base {
-  :root { color-scheme: light; }
-  .dark { color-scheme: dark; }
-  html { scroll-behavior: smooth; }
-  body { @apply bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 antialiased; }
-  ::selection { @apply bg-brand text-white; }
+  :root {
+    color-scheme: light;
+    --paper: 255 255 255;
+    --raised: 255 255 255;
+    --sunken: 248 249 251;
+    --ink: 14 17 22;
+    --muted: 90 99 112;
+    --faint: 138 147 160;
+    --rule: 226 229 234;
+    --signal: 27 68 232;
+    --verify: 14 138 109;
+    --flag: 217 59 59;
+    --warn: 176 106 8;
+  }
+
+  .dark {
+    color-scheme: dark;
+    --paper: 11 13 17;
+    --raised: 19 22 28;
+    --sunken: 15 18 23;
+    --ink: 233 236 242;
+    --muted: 152 161 175;
+    --faint: 106 115 129;
+    --rule: 32 38 49;
+    --signal: 122 150 255;
+    --verify: 45 191 152;
+    --flag: 240 113 113;
+    --warn: 226 160 61;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-paper text-ink antialiased;
+    font-feature-settings: 'ss01', 'cv05';
+  }
+
+  ::selection {
+    @apply bg-signal text-white;
+  }
+
+  /* 숫자는 전부 자리폭 고정 — 판독값처럼 읽히게 */
+  .font-mono {
+    font-variant-numeric: tabular-nums;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-signal ring-offset-2 ring-offset-paper;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }
 
 @layer components {
-  .container-x { @apply mx-auto w-full max-w-content px-6; }
-  .card {
-    @apply rounded-xl border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900;
+  .container-x {
+    @apply mx-auto w-full max-w-content px-5 sm:px-8;
   }
-  .link-brand {
-    @apply text-brand hover:underline dark:text-brand-dark underline-offset-4;
+
+  /* 섹션 좌측 스파인 — 데스크톱에서 라벨이 콘텐츠 옆에 상주한다 */
+  .spine {
+    @apply grid gap-x-10 gap-y-4 lg:grid-cols-[128px_minmax(0,1fr)];
   }
+
+  .label {
+    @apply font-mono text-[11px] uppercase tracking-technical text-faint;
+  }
+
+  .label-signal {
+    @apply font-mono text-[11px] uppercase tracking-technical text-signal;
+  }
+
+  .panel {
+    @apply rounded-lg border border-rule bg-raised;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded border border-rule bg-sunken px-2.5 py-1 font-mono text-[12px] text-muted;
+  }
+
   .btn {
-    @apply inline-flex items-center gap-2 rounded-lg border border-neutral-200 px-4 py-2 text-sm font-medium
-           transition hover:border-neutral-400 dark:border-neutral-800 dark:hover:border-neutral-600;
+    @apply inline-flex items-center gap-2 rounded border border-rule bg-raised px-4 py-2.5 text-sm font-medium text-ink
+           transition-colors hover:border-ink/35;
   }
+
   .btn-solid {
-    @apply inline-flex items-center gap-2 rounded-lg bg-brand px-4 py-2 text-sm font-medium text-white
-           transition hover:bg-brand-light dark:bg-brand-light dark:hover:bg-brand-dark dark:hover:text-neutral-950;
+    @apply inline-flex items-center gap-2 rounded bg-signal px-4 py-2.5 text-sm font-medium text-white
+           transition-opacity hover:opacity-90;
   }
-  .eyebrow {
-    @apply font-mono text-xs uppercase tracking-widest text-brand dark:text-brand-dark;
+
+  .link-signal {
+    @apply text-signal underline-offset-4 hover:underline;
+  }
+
+  /* 시그니처: 계측 눈금선 */
+  .tickline {
+    background-image: repeating-linear-gradient(
+      to right,
+      rgb(var(--rule)) 0 1px,
+      transparent 1px 100%
+    );
+    background-size: 8px 100%;
   }
 }

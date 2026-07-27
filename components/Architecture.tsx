@@ -1,34 +1,40 @@
+/**
+ * 파이프라인 다이어그램.
+ * 레이어는 순서가 의미를 갖는 실제 흐름이라, 좌측 스파인에 노드 마커를 찍어
+ * 위에서 아래로 흐르는 걸 보이게 한다.
+ */
 export default function Architecture({ layers }: { layers: { layer: string; nodes: string[] }[] }) {
   return (
-    <div className="card overflow-x-auto p-6">
-      <div className="min-w-[520px] space-y-3">
-        {layers.map((l, i) => (
-          <div key={l.layer}>
-            <div className="flex items-center gap-4">
-              <div className="w-28 shrink-0 text-right font-mono text-xs uppercase tracking-wider text-neutral-400">
-                {l.layer}
-              </div>
-              <div className="flex flex-1 flex-wrap gap-2">
+    <div className="panel overflow-x-auto p-6 sm:p-8">
+      <ol className="min-w-[480px] space-y-0">
+        {layers.map((l, i) => {
+          const last = i === layers.length - 1;
+          return (
+            <li key={l.layer} className="grid grid-cols-[100px_20px_minmax(0,1fr)] gap-x-3">
+              {/* 레이어 라벨 */}
+              <span className="label pt-2.5 text-right">{l.layer}</span>
+
+              {/* 스파인 */}
+              <span className="relative flex justify-center" aria-hidden>
+                <span className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-signal ring-4 ring-paper" />
+                {!last && <span className="absolute top-3 h-full w-px bg-rule" />}
+              </span>
+
+              {/* 노드 */}
+              <div className={`flex flex-wrap gap-1.5 ${last ? '' : 'pb-5'}`}>
                 {l.nodes.map((n) => (
                   <span
                     key={n}
-                    className="rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-2 text-[13px] font-medium dark:border-neutral-700 dark:bg-neutral-800"
+                    className="rounded border border-rule bg-sunken px-2.5 py-1.5 text-[13px] leading-snug text-ink"
                   >
                     {n}
                   </span>
                 ))}
               </div>
-            </div>
-            {i < layers.length - 1 && (
-              <div className="ml-28 mt-3 flex items-center gap-2 pl-4 text-neutral-300 dark:text-neutral-600" aria-hidden>
-                <svg width="10" height="14" viewBox="0 0 10 14" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M5 0v11M1 8l4 4 4-4" />
-                </svg>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
+            </li>
+          );
+        })}
+      </ol>
     </div>
   );
 }
